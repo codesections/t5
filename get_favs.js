@@ -1,6 +1,7 @@
 const config = {
   appName: 't5 v0.0.3',
   appSite: 'https://distracted-lovelace-530204.netlify.com/',
+  // Current live test site
   scope: 'read:favourites',
 };
 
