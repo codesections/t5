@@ -2,12 +2,22 @@
 <html>
   <body lang="en">
     <div class="login">
-    <h1 id="add-an-instance-h1">Add instance</h1>
-    <form class="add-new-instance" aria-labelledby="add-an-instance-h1">
-      <label class="add-new-instance-label" for="instanceInput">Instance:</label>
+    <h1>Add instance</h1>
+    <form class="add-new-instance">
+      <label for="instanceInput">Instance:</label>
       <input class="add-new-instance-input" type="text" id="instanceInput" placeholder="Enter instance name" required="">
-      <button class="primary add-new-instance-button" type="submit" id="submitButton" >Log in</button>
+      <button type="submit">
+        Log in
+      </button>
     </form>
+
+    <h1>Paste Code here</h1>
+    <form class="auth-code">
+      <label for="authCode">Authentication Code:</label>
+      <input class="auth-code-input" type="text" id="instanceInput" placeholder="Paste authentication code" required="">
+      <button type="submit">
+        Log in
+      </button>
     <script src="get_favs.js"></script>
   </body>
 </html>

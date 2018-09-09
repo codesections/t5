@@ -7,11 +7,6 @@ const config = {
 
 const init = function init() {
   setupEventListeners();
-  // Wait for the user to submit their instance, then run all functions
-  if (window.location.search) {
-    // if the authorization_code code has been returned, it will be in the URL
-    getAuthToken();
-  }
 };
 
 const setupEventListeners = function setupEventListeners() {
@@ -20,6 +15,10 @@ const setupEventListeners = function setupEventListeners() {
       window.localStorage.setItem('baseUrl', `https://${document.querySelector('.add-new-instance-input').value}`);
       e.preventDefault();
       getClientSecret();
+    });
+  document.querySelector('.auth-code')
+    .addEventListener('submit', () => {
+      const authCode = document.querySelector('.auth-code-input').value; getAuthToken(authCode);
     });
 };
 
