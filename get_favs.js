@@ -6,8 +6,9 @@ const config = {
 
 const init = function init() {
   setupEventListeners();
+  // Wait for the user to submit their instance, then run all functions
   if (window.location.search) {
-    resetUrl();
+    // if the authorization_code code has been returned, it will be in the URL
     getAuthToken();
   }
 };
@@ -22,34 +23,29 @@ const setupEventListeners = function setupEventListeners() {
 };
 
 const getClientSecret = function getClientSecret() {
-  if (window.localStorage.getItem(`${config.appName}_clientId`)) {
-    auth(window.localStorage.getItem('baseUrl'),
-      window.localStorage.getItem(`${config.appName}clientId`));
-  } else {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST',
-      `${window.localStorage.getItem('baseUrl')}/api/v1/apps`,
-      true);
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST',
+    `${window.localStorage.getItem('baseUrl')}/api/v1/apps`,
+    true);
 
-    const params = new FormData();
-    params.append('client_name', config.appName);
-    params.append('client_secret', '');
-    params.append('scopes', config.scope);
-    params.append('redirect_uris', config.appSite);
-    xhr.onreadystatechange = () => {
-      if (
-        xhr.readyState === XMLHttpRequest.DONE
-        && xhr.status === 200
-      ) {
-        const clientId = JSON.parse(xhr.responseText).client_id;
-        const clientSecret = JSON.parse(xhr.responseText).client_secret;
-        window.localStorage.setItem(`${config.appName}clientId`, clientId);
-        window.localStorage.setItem(`${config.appName}clientSecret`, clientSecret);
-        auth();
-      }
-    };
-    xhr.send(params);
-  }
+  const params = new FormData();
+  params.append('client_name', config.appName);
+  params.append('client_secret', '');
+  params.append('scopes', config.scope);
+  params.append('redirect_uris', config.appSite);
+  xhr.onreadystatechange = () => {
+    if (
+      xhr.readyState === XMLHttpRequest.DONE
+      && xhr.status === 200
+    ) {
+      const clientId = JSON.parse(xhr.responseText).client_id;
+      const clientSecret = JSON.parse(xhr.responseText).client_secret;
+      window.localStorage.setItem(`${config.appName}clientId`, clientId);
+      window.localStorage.setItem(`${config.appName}clientSecret`, clientSecret);
+      auth();
+    }
+  };
+  xhr.send(params);
 };
 
 const auth = function authorizeApplication() {
@@ -63,13 +59,9 @@ const auth = function authorizeApplication() {
   window.location.href = url;
 };
 
-const resetUrl = function stripDataFromUrlAndReturnItToNormal() {
+const getAuthToken = function useAuthCodeToGetAuthToken() {
   window.localStorage.setItem(`${config.appName}t5AuthCode`,
     window.location.search.split('=')[1]);
-  window.history.pushState({}, '', config.appSite);
-};
-
-const getAuthToken = function useAuthCodeToGetAuthToken() {
   const xhr = new XMLHttpRequest();
   xhr.open('POST',
     `${window.localStorage.getItem('baseUrl')}/oauth/token`,
