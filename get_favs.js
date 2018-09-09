@@ -48,7 +48,7 @@ const getClientSecret = function getClientSecret() {
 const auth = function authorizeApplication() {
   const xhr = new XMLHttpRequest();
 
-  xhr.open('GET', `${window.localStorage.getItem('baseUrl')}/oauth/authorize?`
+  xhr.open('POST', `${window.localStorage.getItem('baseUrl')}/oauth/authorize?`
     + `scope=${config.scope}&`
     + 'response_type=code&'
     + `redirect_uri=${config.appSite}&`
