@@ -46,14 +46,12 @@ const getClientSecret = function getClientSecret() {
 };
 
 const auth = function authorizeApplication() {
-  const xhr = new XMLHttpRequest();
-
-  xhr.open('POST', `${window.localStorage.getItem('baseUrl')}/oauth/authorize?`
+  // Just give me a link, I'll type it in myself!
+  console.log(`${window.localStorage.getItem('baseUrl')}/oauth/authorize?`
     + `scope=${config.scope}&`
     + 'response_type=code&'
     + `redirect_uri=${config.appSite}&`
-    + `client_id=${window.localStorage.getItem(`${config.appName}clientId`)}`, true);
-  xhr.send();
+    + `client_id=${window.localStorage.getItem(`${config.appName}clientId`)}`);
 };
 
 const getAuthToken = function useAuthCodeToGetAuthToken() {
