@@ -1,6 +1,6 @@
 const config = {
   appName: 't5 v0.0.3',
-  appSite: 'https://distracted-lovelace-530204.netlify.com/',
+  appSite: 'https://test--distracted-lovelace-530204.netlify.com/',
   // Current live test site
   scope: 'read:favourites',
 };
@@ -34,10 +34,7 @@ const getClientSecret = function getClientSecret() {
   params.append('scopes', config.scope);
   params.append('redirect_uris', config.appSite);
   xhr.onreadystatechange = () => {
-    if (
-      xhr.readyState === XMLHttpRequest.DONE
-      && xhr.status === 200
-    ) {
+    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
       const clientId = JSON.parse(xhr.responseText).client_id;
       const clientSecret = JSON.parse(xhr.responseText).client_secret;
       window.localStorage.setItem(`${config.appName}clientId`, clientId);
@@ -49,14 +46,14 @@ const getClientSecret = function getClientSecret() {
 };
 
 const auth = function authorizeApplication() {
-  const url = encodeURI(
-    `${window.localStorage.getItem('baseUrl')}/oauth/authorize?`
+  const xhr = new XMLHttpRequest();
+
+  xhr.open('GET', `${window.localStorage.getItem('baseUrl')}/oauth/authorize?`
     + `scope=${config.scope}&`
     + 'response_type=code&'
     + `redirect_uri=${config.appSite}&`
-    + `client_id=${window.localStorage.getItem(`${config.appName}clientId`)}`,
-  );
-  window.location.href = url;
+    + `client_id=${window.localStorage.getItem(`${config.appName}clientId`)}`, true);
+  xhr.send();
 };
 
 const getAuthToken = function useAuthCodeToGetAuthToken() {
