@@ -1,6 +1,6 @@
 const config = {
   appName: 't5 v0.0.3',
-  appSite: 'http://0.0.0.0:8000',
+  appSite: 'https://distracted-lovelace-530204.netlify.com/',
   scope: 'read:favourites',
 };
 
