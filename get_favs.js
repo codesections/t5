@@ -32,7 +32,7 @@ const getClientSecret = function getClientSecret() {
   const params = new FormData();
   params.append('client_name', config.appName);
   params.append('scopes', config.scope);
-  params.append('redirect_uris', config.appSite);
+  params.append('redirect_uris', 'urn:ietf:wg:oauth:2.0:oob');
   xhr.onreadystatechange = () => {
     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
       const clientId = JSON.parse(xhr.responseText).client_id;
@@ -50,11 +50,11 @@ const auth = function authorizeApplication() {
   console.log(`${window.localStorage.getItem('baseUrl')}/oauth/authorize?`
     + `scope=${config.scope}&`
     + 'response_type=code&'
-    + `redirect_uri=${config.appSite}&`
+    + 'redirect_uri=urn:ietf:wg:oauth:2.0:oob&'
     + `client_id=${window.localStorage.getItem(`${config.appName}clientId`)}`);
 };
 
-const getAuthToken = function useAuthCodeToGetAuthToken() {
+const getAuthToken = function useAuthCodeToGetAuthToken(authorizationCode) {
   window.localStorage.setItem(`${config.appName}t5AuthCode`,
     window.location.search.split('=')[1]);
   const xhr = new XMLHttpRequest();
@@ -68,7 +68,7 @@ const getAuthToken = function useAuthCodeToGetAuthToken() {
   params.append('client_secret',
     window.localStorage.getItem(`${config.appName}clientSecret`));
   params.append('grant_type', 'authorization_code');
-  params.append('code', window.localStorage.getItem(`${config.appName}t5AuthCode`));
+  params.append('code', authorizationCode);
   params.append('redirect_uri', 'urn:ietf:wg:oauth:2.0:oob');
 
   xhr.send(params);
