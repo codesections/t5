@@ -31,7 +31,6 @@ const getClientSecret = function getClientSecret() {
 
   const params = new FormData();
   params.append('client_name', config.appName);
-  params.append('client_secret', '');
   params.append('scopes', config.scope);
   params.append('redirect_uris', config.appSite);
   xhr.onreadystatechange = () => {
