@@ -1,0 +1,26 @@
+# The URL the site will be built for
+base_url = "https://www.codesections.com"
+
+# Used in RSS by default
+title = "Codesections"
+description = "The personal website and blog of Daniel Long Sockwell, a lawyer-turned-programmer with an interest in web development, open source, and making things as simple as possible."
+# the default language, used in RSS and coming i18n
+default_language = "en"
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = false
+
+generate_rss = true
+
+# Whether to do syntax highlighting
+# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Gutenberg
+highlight_code = true
+
+highlight_theme = "solarized-dark"
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = false
+
+[extra]
+# Put all your custom variables here
+live_base_url = "https://www.codesections.com/"

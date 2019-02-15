@@ -1,0 +1,85 @@
+==================================================================
+https://keybase.io/codesections
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://www.codesections.com
+  * I am codesections (https://keybase.io/codesections) on keybase.
+  * I have a public key with fingerprint 7303 E046 50F8 CCA0 4F66  EA6E 25B6 4501 3B50 8835
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01013f751a35912a315a9d8b9ef8e9da2e631950d58d1f45b4d5b771c2ad32f5aa2e0a",
+      "fingerprint": "7303e04650f8cca04f66ea6e25b645013b508835",
+      "host": "keybase.io",
+      "key_id": "25b645013b508835",
+      "kid": "01013f751a35912a315a9d8b9ef8e9da2e631950d58d1f45b4d5b771c2ad32f5aa2e0a",
+      "uid": "55b61a649e03b1e099ff75022a993b19",
+      "username": "codesections"
+    },
+    "merkle_root": {
+      "ctime": 1531226008,
+      "hash_meta": "f05f8c0af7d18fe7330638026ee7c929579cbfb1df83a0d46d6942111296b602",
+      "seqno": 3224973
+    },
+    "revoke": {
+      "sig_ids": [
+        "f0757045b61391630b74e8e549f35bc048bfc3cfca0312254368bd9bad31ef5c0f"
+      ]
+    },
+    "service": {
+      "hostname": "www.codesections.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1531226036,
+  "expire_in": 157680000,
+  "prev": "48c9bc8ea60ca3937d1cd43585ec01fe44ecc83b2bbe5c3f2b4acae39b111b28",
+  "seqno": 21,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+
+owGtk3tQFVUcx+FiSdfBBxg6dU1ax2aYFM/u2bOPi/IwkYxMwx5OJJc9u2cvV+69
+C7tXhGFgfKbgjBYMGpolEkplPKLJMQtNAynxmVgamo80H+nkaKIODp1ldGqa/mz/
+2TnnfH/f3/d8zjlvR0WERYaP/yItPHH2ShS+/zIOy5q2dUcJgw2tmHGXMHlk4Ef8
+GrFCnjyfxrgZwAIW6iJiFYhkllMgixRZk7BMdInImsIRAbIyAhqSNFbnEeY1hEWR
+VTlFg5yOFKoACjOB0X1BLzHzTV8wRG1FCCABvICALqmqAnhdEIgiEA5hgUe0JUZA
+kiCihbmGZVfQcFixSILPoHN04BmI9x/6/zn3ggE7RPuwisDLBEDMEiDLOjUHHKfI
+Mp2QbaFFzKASIFStGpQgUUM+I2gxpROYADHz/MRjGkbIBkwXbBmLIMtxAgAS3aRi
+5XoCJKTQah0gCgUouqixkk5ECIEAJcAJhIiqzMlIlFWsY1bTJagAjRc0QeY5lmU5
+WcAC4GgWixQEDcYNOY6XRUgTmKTQyCN2c8vnpegsxp3F7F6qAxGJgLc3B2VWgACL
+PJEI4mUdIqwCXsK6ClWdnpCdFfFQkLAmY8qIJTpSgc7MK7XbmYU+dcDePq0HFBYu
+XJjwTxJ0EKDZ8k0jZKiGnypyQ6F8y20TChXnD5QQ7Hlg5sG+oEbvDK0oJKZFDSgx
+qvwXPChMYEhRvs8kHp+tQKIgAfrZfUghteQlVcaqRC8XUBUoQwpV1XiIJERUwOqE
+54mqShBzGBOkQp3DvKIqBMqYEsWc9DdNjqU5FS/1pAyDSmiBSZhSZ7kDDgoLjwwb
+E/v0ICvizPTZd7o2zdKvBB++s0cc9iMLcz42/OFM4Niw/qllx8uE5rGewXFXk6Oi
+NiZ93nwO163Y4f12Rmtnir/xhpv01sRXC099eSXzx7T208y12In3ohvqL9wSxw/d
+m5e7vPv5vtT+9hF74w+VVZxPbtiZ+OTdR2duNPa5pu1J7ihwbJ+65bWD8/pilzf6
+r88tuXD2kif2hU8rKqIvjj2QHROTvXV0W6XLGzh2vaeMCXT9/mxRYv8KR+4z9Vtq
+6+498f7XKUdytosbVt0csfnG5Uk5BZX9cdJnMTWTGpyfaNfOCUczRm0c8mrVVz2R
+u0o9bRWdf/KF1tqD65sm1yRmdOee+9jfdGb4zfWx9dUfahdnJsV0DCKNzy0q33eg
+62UX79o5Os11oLmpfJX/xrIVtZk/JHUMaTAqW3qlwyf6R22Ln+seN7JzcN8HZvPa
+bveRS5nqxIidru+jQ4HLu1O9s0KOOVNwqmP1wXtgbfq65CXeksmpG35LmMoMe2uN
+FXO7eFNcynnn0N49FcvE+05fW86sod8cGnNi2/2kpT7t1zdnF8zv/skdteli9EuH
+O45m9Gy4MuTksnJj5c9rWjMW3480z265UD8ttq6o9MXCO23F5ad3vbNoTkO4a2x6
+Vea6q5tfYZxcSt0S5ynX1sdNq68soq10SnrKe7XZ746a0lJbmZJ0p33cjLhfjr/u
+2pb1R8/d+eSN213eU7dazmbFf3fXUb1/8UdV2cWrW0fK8XNOMnU1fwE=
+=KhO8
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/codesections
+
+==================================================================

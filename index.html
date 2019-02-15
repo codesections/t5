@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta property="og:title" content="t5"> 
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="t5">
+    <meta name="twitter:image:src" content="https://www.codesections.com/codesections_logo.png"> 
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="www.codesections.com">
+    <meta property="og:site_name" content="CodeSections">
+    <meta property="article:section" content="Article Section">
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="https://www.codesections.com/codesections_logo_large.png"><meta name="og:description" content="The Tool for Tabulating Thirty Top Tooters (t5) searches all of your posts to Mastodon and finds the 30 users whose posts you've favorated most often.">
+    <meta name="description" content="The Tool for Tabulating Thirty Top Tooters (t5) searches all of your posts to Mastodon and finds the 30 users whose posts you've favorated most often.">
+    <meta name="twitter:description" content="The Tool for Tabulating Thirty Top Tooters (t5) searches all of your posts to Mastodon and finds the 30 users whose posts you've favorated most often.">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#d9d9d9">
+    <link rel="canonical" href="https://t5.codesections.com">
+    <title>
+       t5
+    </title>
+    <style>
+/* The CSS and JavaScript for this page are both entirely inline because,
+ * even with that added content, the compressed page is under 14KB and thus
+ * fits in the initial TCP window (1 round trip).  Comments remain in for
+ * the same reason.
+ *
+ * The CSS follows the BEM style, which is a nice fit for a project of
+ * this size.  http://getbem.com/  The colors and general look/feel 
+ * are heavily modeled on the Mastodon default theme, since many visitors
+ * will likely come directly from there.
+ */
+
+/*
+ * Page-Global Styles
+ */
+.body__defaults {
+  margin: 20px auto;
+  max-width: 650px;
+  line-height: 1.6;
+  font-size: 18px;
+  color: #fff;
+  background-color: #444b5d;
+  padding: 0 10px;
+  font-family: -apple-system, /* Use system fonts to save page-weight */
+         BlinkMacSystemFont,
+         'Segoe UI',
+         Roboto,
+         'Helvetica Neue',
+         Arial, sans-serif
+}
+.header--main {
+  margin-top: 1em;
+  line-height: 1em;
+  margin-bottom: 0;
+}
+.header--secondary {
+  margin-top: 2em;
+}
+.link {
+  color: #2b90d9; /* blue that matches buttons from Mastodon */
+  text-decoration: none;
+}
+.link--dark {
+  color: #0071F0; /* Slightly darker blue for light backgrounds */
+}
+.tagline {
+  margin-top: 0;
+}
+.instance-adding-form {
+    width: 50%;
+    width: fit-content;
+    margin: auto;
+    margin-top: 3em;
+    text-align: center;
+}
+.instance-adding-form__label {
+  font-size: 2em;
+}
+.instance-adding-form__input {
+  font-size: 1em;
+}
+.instance-adding-form__button {
+  background-color: #2b90d9; /* Blue, matching Mastodon "Toot!" button */
+  border: 10px none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 500;
+  line-height: 36px;
+  padding: 0 16px;
+  text-align: center;
+  font-size: 1em;
+  margin-top: 1em;
+}
+
+/*
+ * Styles for the Results section (shown once loaded)
+ */
+.content__results {
+  display: none; /* Initially hidden, show by JavaScript */
+}
+.results-table {
+  overflow: hidden;
+  border-spacing: 0;
+  margin: auto;
+  border-radius: 12px;
+  text-align: left;
+}
+.results-table__header {
+  font-weight: 600;
+}
+.results-table__cell {
+  padding: 6px 13px;
+  border-bottom: 1px solid #393f4f; /* grey, same as used in Mastodon*/
+  max-width: 63vw; /* to ensure table doesn't overflow on mobile */
+}
+.results-table__row {
+  background-color: #282c37; /* Dark grey; same as Mastodon timelines */
+}
+.account-name {
+  color: #606984; /* Light grey; same as used in Mastodon */
+}
+
+/*
+ * Styles for the loading screen
+ */
+.content__loading {
+  display: none; /* initially hidden, revealed by JavaScript */
+  text-align: center;
+}
+@-webkit-keyframes blink {
+  50% {
+    color: transparent;
+  }
+}
+@keyframes blink {
+  50% {
+    color: transparent;
+  }
+}
+.loader__dot {
+  -webkit-animation: 1s blink infinite;
+  animation: 2s blink infinite;
+}
+.loader__dot:nth-child(2) {
+  -webkit-animation-delay: 250ms;
+  animation-delay: 250ms;
+}
+.loader__dot:nth-child(3) {
+  -webkit-animation-delay: 500ms;
+  animation-delay: 500ms;
+}
+
+/* 
+ * Alert styles
+ */
+.alert {
+  padding: .5em;
+  border-radius: 6px;
+  margin-top: 1em;
+}
+
+.alert__warning {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.alert__error {
+  background-color: #c00;
+  display: none;
+}
+
+.header--alert {
+  display: block;
+  margin: auto;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.paragraph--alert {
+  margin: 1em;
+  line-height: 1.25em;
+}
+    </style>
+  <body lang="en" class="body__defaults">
+    <h1 class="header--main" id="add-an-instance-h1">
+      Tool for Tabulating Thirty Top Tooters
+    </h1>
+    <p class="tagline">
+      A <a class="link" href="https://www.codesections.com">codesections</a> project |
+<a class="link" href="https://github.com/codesections/t5">source code</a>
+    </p>
+    <noscript>
+      <div class="alert alert__warning">
+        <strong class="header--alert">JavaScript Required</strong>
+        <p class="paragraph--alert">Ok, yes, I know you probably have 
+        JavaScript disabled for good reasons—I also value my privacy and
+        don't like the bloat of the modern web.  But look, this app is
+        neither bloated nor spying on you.  If you don't believe me, check
+        out the <a class="link" href="https://github.com/codesections/t5">source</a>. 
+        In fact, just read the source for this page—I didn't even minify 
+        anything or take out the comments.  You can see for yourself that
+        there aren't any trackers; just simple http requests to your mastodon
+        instance.  This is one to add to your whitelist.
+        </p>
+      </div>
+    </noscript>
+
+    <div class="content__login">
+      <p>
+        A tool for
+        <a class="link" href="https://joinmastodon.org">Mastodon</a>
+        users that will scan all the toots you've favorited and find
+        the 30 people whose toots you've favorited most often.
+      </p>
+      <p>
+        To get started, enter your instance below.
+      </p>
+      <form class="instance-adding-form">
+        <label class="instance-adding-form__label" for="instanceInput">
+          Instance:
+        </label>
+        <br>
+        <input class="instance-adding-form__input" type="text" id="instanceInput" placeholder="Enter instance name" required="">
+        <br>
+        <button class="instance-adding-form__button"type="submit" id="submitButton">
+          Tabulate
+        </button>
+        <div class="alert alert__error">
+          <strong>Error</strong>: Could not load instance.  Please check the name and try again.
+        </div>
+      </form>
+    </div>
+    
+    <div class="content__loading">
+      <h2 class="header--secondary">
+      Loading your favorited toots<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span>
+      </h2>
+      <p>
+        (this could take a minute or two)
+      </p>
+      <h2 class="header--secondary">
+        <span class="loading__fav-count">0</span> toots loaded.
+      </h2>
+    </div>
+    
+    <div class="content__results">
+      <table class="results-table">
+        <thead class="results-table__header">
+          <tr class="results-table__row">
+            <th class="results-table__cell">You've favorited toots by:</th>
+            <th class="results-table__cell">Times:</th>
+          </tr>
+        </thead>
+        <tbody class="results-table">
+          <!-- to be filled in by JS -->
+        </tbody>
+      </table>
+    </div>
+    <script>
+const config = {
+  appName: 't5 v0.0.4',
+  appSite: 'https://t5.codesections.com',
+  scope: 'read:favourites',
+};
+
+const init = function init() {
+  setupEventListeners();
+  // Wait for the user to submit their instance, then run all functions
+  if (window.location.search) {
+    // if the authorization_code code has been returned, it will be in the URL
+    getAuthToken();
+    // Then, clean up the URL
+    window.history.pushState({}, '', config.appSite);
+  }
+};
+
+const setupEventListeners = function setupEventListeners() {
+  document.querySelector('.instance-adding-form')
+    .addEventListener('submit', (e) => {
+      let url = document.querySelector('.instance-adding-form__input').value;
+      url = url.toLowerCase().trim();
+      if (!/https/.test(url)) { url = `https://${url}`; }
+      // This breaks on http sites.  But Mastodon doesn't federate with http sites
+
+      window.localStorage.setItem('baseUrl', url);
+      e.preventDefault();
+      getClientSecret();
+    });
+};
+
+const getClientSecret = function getClientSecret() {
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST',
+    `${window.localStorage.getItem('baseUrl')}/api/v1/apps`,
+    true);
+
+  xhr.onerror = () => {
+    document.querySelector('.alert__error').style.display = 'block';
+  };
+
+  const params = new FormData();
+  params.append('client_name', config.appName);
+  params.append('scopes', config.scope);
+  params.append('redirect_uris', config.appSite);
+  xhr.onreadystatechange = () => {
+    if (
+      xhr.readyState === XMLHttpRequest.DONE
+      && xhr.status === 200
+    ) {
+      const clientId = JSON.parse(xhr.responseText).client_id;
+      const clientSecret = JSON.parse(xhr.responseText).client_secret;
+      window.localStorage.setItem(`${config.appName}clientId`, clientId);
+      window.localStorage.setItem(`${config.appName}clientSecret`, clientSecret);
+      auth();
+    }
+  };
+  xhr.send(params);
+};
+
+const auth = function authorizeApplication() {
+  const url = `${window.localStorage.getItem('baseUrl')}/oauth/authorize?`
+    + `scope=${config.scope}&`
+    + 'response_type=code&'
+    + `redirect_uri=${config.appSite}&`
+    + `client_id=${window.localStorage.getItem(`${config.appName}clientId`)}&`
+    + `client_secret=${window.localStorage.getItem(`${config.appName}clientSecret`)}&`;
+  window.location.href = url;
+};
+
+const getAuthToken = function useAuthCodeToGetAuthToken() {
+  window.localStorage.setItem(`${config.appName}t5AuthCode`,
+    window.location.search.split('=')[1]);
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST',
+    `${window.localStorage.getItem('baseUrl')}/oauth/token`,
+    true);
+
+  const params = new FormData();
+  params.append('client_id',
+    window.localStorage.getItem(`${config.appName}clientId`));
+  params.append('client_secret',
+    window.localStorage.getItem(`${config.appName}clientSecret`));
+  params.append('grant_type', 'authorization_code');
+  params.append('code', window.localStorage.getItem(`${config.appName}t5AuthCode`));
+  params.append('redirect_uri', config.appSite);
+
+  xhr.onreadystatechange = () => {
+    if (
+      xhr.readyState === XMLHttpRequest.DONE
+      && xhr.status === 200
+    ) {
+      const authToken = JSON.parse(xhr.responseText).access_token;
+      window.localStorage.setItem(`${config.appName}token`, authToken);
+      displayLoading();
+      getFavorites(`${window.localStorage.getItem('baseUrl')}/api/v1/favourites?limit=40`);
+    }
+  };
+  xhr.send(params);
+};
+
+const displayLoading = function hideStartPageAndDisplayLoggedInPage() {
+  document.querySelector('.content__login').style.display = 'none';
+  document.querySelector('.content__loading').style.display = 'block';
+};
+
+const getFavorites = function getAllTheUsersFavoriates(url) {
+  const response = [];
+
+  const getNextFavs = function getNextFavs(next) {
+    let done = false;
+    const accessToken = `Bearer ${window.localStorage.getItem(`${config.appName}token`)}`;
+    const M = new XMLHttpRequest();
+    M.open('get', next, true);
+
+    M.setRequestHeader('Authorization', accessToken);
+
+    M.send(null);
+
+    M.onreadystatechange = () => {
+      if (M.readyState === 2) {
+        if (
+          !M.getResponseHeader('link')
+          || !M.getResponseHeader('link').match(/next/)
+          || parseInt(M.getResponseHeader('X-RateLimit-Remaining')) <= 1
+        ) {
+          done = true;
+        }
+        else {
+          getNextFavs(M.getResponseHeader('link').split('>')[0].slice(1));
+        }
+      }
+      if (M.readyState === 4 && M.status === 200) {
+        JSON.parse(M.responseText).forEach((el) => {
+          const item = {
+            accountName: el.account.acct,
+            displayName: el.account.display_name,
+          };
+          response.push(item);
+        });
+        if (done === true) {
+          processResults(response);
+        }
+        incrementFavCount();
+      }
+    };
+  };
+  getNextFavs(url);
+};
+
+const incrementFavCount = function incrementCountOfFavoratedTootsLoaded() {
+  const currentCount = parseInt(
+    document.querySelector('.loading__fav-count').innerHTML, 10,
+  );
+  document.querySelector('.loading__fav-count').innerHTML = currentCount + 40;
+};
+
+const processResults = function countAndDisplayResults(response) {
+  const resultTable = document.querySelector('.results-table');
+  const obj = {};
+  response.forEach((el) => {
+    if (!obj[el.accountName]) {
+      obj[el.accountName] = {
+        count: 1,
+        displayName: el.displayName,
+      };
+    } else {
+      obj[el.accountName].count++;
+    }
+  });
+  const keys = Object.keys(obj);
+
+  keys.sort((a, b) => obj[b].count - obj[a].count);
+  keys.slice(0, 30).forEach((key) => {
+    const accountName = key;
+    const { displayName, count } = obj[key];
+
+    resultTable.innerHTML += `
+<tr class="results-table__row">
+  <td class="results-table__cell">
+    ${displayName}<span class="account-name"> @${accountName}<span>
+  </td>
+  <td class="results-table__cell">
+    ${count}
+  </td>
+</tr>`;
+  });
+  document.querySelector('.content__results').style.display = 'block';
+  document.querySelector('.content__loading').style.display = 'none';
+};
+
+init();
+    </script>
+  </body>
+</html>
